@@ -1,0 +1,19 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "gordski",
+    "longName": "DateFace",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "DateFace",
+    "uuid": "49900626-c0b2-48e0-8a07-75ef5d35705c",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
