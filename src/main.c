@@ -1,8 +1,11 @@
 #include <pebble.h>
 
 Window *my_window;
+
 TextLayer *week_day_layer;
 TextLayer *day_of_month_layer;
+TextLayer *month_layer;
+
 InverterLayer *inverter_layer;
 
 const char *day_of_month_lookup[] = {
@@ -41,12 +44,16 @@ const char *day_of_month_lookup[] = {
 
 char week_day[4];
 const char *day_of_month;
+char month[8];
 
 void set_strings(struct tm *t) {
   strftime(week_day, sizeof(week_day), "%a", t);
   week_day[0] = week_day[0] + ('a' - 'A');
   
   day_of_month = day_of_month_lookup[t->tm_mday-1];
+  
+  strftime(month, sizeof(month), "%b", t);
+  month[0] = month[0] + ('a' - 'A');
 }
 
 void render() {
@@ -60,6 +67,10 @@ void render() {
   text_layer_set_font(day_of_month_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
 	text_layer_set_text_alignment(day_of_month_layer, GTextAlignmentLeft);
 
+  // Day of Month
+  text_layer_set_text(month_layer, month);
+  text_layer_set_font(month_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+	text_layer_set_text_alignment(month_layer, GTextAlignmentRight);
 }
 
 void handle_time_change(struct tm *t, TimeUnits units) {
@@ -75,6 +86,9 @@ void handle_init(void) {
 
   day_of_month_layer = text_layer_create(GRect(0,52,144,95));
   layer_add_child(window_get_root_layer(my_window), text_layer_get_layer(day_of_month_layer));
+
+  month_layer = text_layer_create(GRect(0,147,144,30));
+  layer_add_child(window_get_root_layer(my_window), text_layer_get_layer(month_layer));
   
   time_t now = time(NULL);
   set_strings(localtime(&now));
@@ -91,6 +105,7 @@ void handle_init(void) {
 void handle_deinit(void) {
   text_layer_destroy(week_day_layer);
   text_layer_destroy(day_of_month_layer);
+  text_layer_destroy(month_layer);
   inverter_layer_destroy(inverter_layer);
   window_destroy(my_window);
 }
