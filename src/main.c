@@ -69,7 +69,7 @@ void render() {
 
   // Day of Month
   text_layer_set_text(month_layer, month);
-  text_layer_set_font(month_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+  text_layer_set_font(month_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_LIGHT));
 	text_layer_set_text_alignment(month_layer, GTextAlignmentRight);
 }
 
@@ -82,12 +82,15 @@ void handle_init(void) {
   my_window = window_create();
 
   week_day_layer = text_layer_create(GRect(0, 10, 144, 42));
+  text_layer_set_background_color(week_day_layer, GColorClear);
   layer_add_child(window_get_root_layer(my_window), text_layer_get_layer(week_day_layer));
 
-  day_of_month_layer = text_layer_create(GRect(0,52,144,95));
+  day_of_month_layer = text_layer_create(GRect(0,42,144,95));
+  text_layer_set_background_color(day_of_month_layer, GColorClear);
   layer_add_child(window_get_root_layer(my_window), text_layer_get_layer(day_of_month_layer));
 
-  month_layer = text_layer_create(GRect(0,147,144,30));
+  month_layer = text_layer_create(GRect(0,110,144,58));
+  text_layer_set_background_color(month_layer, GColorClear);
   layer_add_child(window_get_root_layer(my_window), text_layer_get_layer(month_layer));
   
   time_t now = time(NULL);
